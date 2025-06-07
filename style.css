@@ -1,0 +1,481 @@
+/* style.css */
+
+/* Reset CSS Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #000000;
+    color: #2c03b1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Header dan Navigasi */
+/* --- Header & Navigation --- */
+/* --- Header & Navigation --- */
+header {
+    background: black;
+    color: #ffffff;
+    padding: 1.5rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background 0.4s ease-out, padding 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between; /* Ini sudah benar: mendorong logo ke kiri, menu ke kanan */
+    align-items: center;
+    max-width: 1100px; /* Sesuaikan dengan container */
+    margin: auto;
+    padding: 0 25px;
+}
+
+nav .logo {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+    /* Tambahkan ini jika Anda ingin logo tetap di kiri */
+    margin-right: auto;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    /* HAPUS: margin-left: 30px; */ /* Ini bisa membuat menu terlalu jauh di kanan pada beberapa kasus */
+    /* Opsional: Tambahkan gap antar item jika Anda mau */
+    gap: 30px; /* Memberikan jarak antar item menu */
+}
+
+nav ul li {
+    /* HAPUS: margin-left: 30px; */ /* Jika sudah menggunakan gap di ul, ini tidak perlu */
+}
+
+nav ul li a {
+    color: #ffffff;
+    font-weight: 600;
+    padding: 5px 0;
+    position: relative;
+}
+
+/* ... Kode CSS lainnya ... */
+
+/* --- Responsive Design (Media Queries) --- */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center; /* Pusat logo dan menu saat dalam mode kolom */
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 20px;
+        align-items: center; /* Pusat item navigasi di tengah */
+        gap: 10px; /* Sesuaikan gap untuk mobile */
+    }
+
+    /* Hapus margin-left dari logo di mobile agar tidak mengganggu */
+    nav .logo {
+        margin-right: 0;
+        margin-bottom: 20px; /* Memberi jarak antara logo dan menu di mobile */
+    }
+}
+
+/* Tombol Umum */
+.btn {
+    display: inline-block;
+    background: #000000;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #290469;
+}
+
+.btn-small {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+}
+
+/* Bagian Umum */
+section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+section:nth-child(even) {
+    background-color: #000000;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #ffffff;
+}
+
+/* --- Hero Section --- */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.303), rgba(0, 0, 0, 0.303)), url('pict/fotoku.jpg') no-repeat center center/cover;
+    color: #fff;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative; /* Penting untuk pseudo-element */
+    overflow: hidden; /* Pastikan tidak ada overflow dari pseudo-element */
+}
+
+/* Efek Overlay Gradien Animasi */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0,123,255,0.2), rgba(40,167,69,0.2)); /* Gradien warna */
+    mix-blend-mode: multiply; /* Mode blending */
+    animation: gradientShift 15s ease infinite alternate; /* Animasi pergeseran gradien */
+    pointer-events: none; /* Agar tidak mengganggu interaksi mouse */
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* --- About Me Section --- */
+.about-me .about-content {
+    display: flex;
+    flex-wrap: wrap; /* Penting untuk responsivitas */
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Spasi antar elemen */
+    max-width: 900px;
+    margin: auto;
+    text-align: left;
+}
+
+.about-me img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 7px solid var(--primary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.about-me img:hover {
+    transform: scale(1.05);
+}
+
+.about-me .about-content > div { /* Target div pembungkus teks */
+    flex: 1; /* Biarkan div ini mengambil sisa ruang yang tersedia */
+    min-width: 300px; /* Pastikan tidak terlalu kecil di layar sempit */
+    max-width: 600px; /* Batasi lebar maksimum agar tidak terlalu panjang */
+}
+
+.about-me p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 20px; /* Memberi jarak antar paragraf */
+}
+
+.about-me h3 { /* Gaya untuk sub-heading */
+    font-family: var(--font-heading);
+    font-size: 1.8rem; /* Ukuran yang sesuai */
+    margin-top: 30px; /* Jarak atas untuk sub-heading */
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+
+/* --- Responsive Adjustment for About Section --- */
+@media (max-width: 768px) {
+    .about-me .about-content {
+        flex-direction: column; /* Teks dan gambar diatur vertikal */
+        text-align: center; /* Teks menjadi rata tengah */
+    }
+
+    .about-me img {
+        margin-right: 0;
+        margin-bottom: 30px; /* Jarak bawah setelah gambar */
+    }
+
+    .about-me .about-content > div {
+        text-align: center; /* Pastikan teks di dalam div juga rata tengah */
+    }
+}
+
+/* Skills Section */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.skill-item {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.skill-item:hover {
+    transform: translateY(-5px);
+}
+
+.skill-item h3 {
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+/* Portfolio Section */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.portfolio-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.662);
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.portfolio-item h3 {
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+.portfolio-item p {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+/* Contact Section */
+.contact p {
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.contact form {
+    max-width: 600px;
+    margin: auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.contact .btn {
+    width: auto;
+    display: block; /* Agar tombol mengisi lebar form jika diinginkan */
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-links {
+    margin-top: 40px;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #0011ff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #0011ff;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background: #000000;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+    .about-me .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-me img {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .skills-grid, .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* --- Responsive Design (Media Queries) --- */
+@media (max-width: 992px) {
+    /* Gaya untuk layar yang lebih kecil dari 992px (misalnya, tablet) */
+}
+
+@media (max-width: 768px) {
+    /* Gaya untuk layar yang lebih kecil dari 768px (misalnya, tablet potret atau smartphone besar) */
+}
+
+@media (max-width: 480px) {
+    /* Gaya untuk layar yang lebih kecil dari 480px (misalnya, smartphone) */
+}
+/* --- CSS untuk Animasi Scroll Reveal --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px); /* Sedikit lebih jauh dari sebelumnya */
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Kurva animasi lebih halus */
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Tambahkan delay untuk item-item grid secara berurutan */
+.skills-grid .skill-item.reveal {
+    transition-delay: 0.1s; /* Delay default */
+}
+.skills-grid .skill-item.reveal:nth-child(2) { transition-delay: 0.2s; }
+.skills-grid .skill-item.reveal:nth-child(3) { transition-delay: 0.3s; }
+.skills-grid .skill-item.reveal:nth-child(4) { transition-delay: 0.4s; }
+/* Tambahkan lebih banyak sesuai jumlah skill item Anda */
+
+
+.portfolio-grid .portfolio-item.reveal {
+    transition-delay: 0.1s; /* Delay default */
+}
+.portfolio-grid .portfolio-item.reveal:nth-child(2) { transition-delay: 0.2s; }
+.portfolio-grid .portfolio-item.reveal:nth-child(3) { transition-delay: 0.3s; }
+.portfolio-grid .portfolio-item.reveal:nth-child(4) { transition-delay: 0.4s; }
+/* Tambahkan lebih banyak sesuai jumlah portfolio item Anda */
+
+
+/* Untuk efek hover item kartu */
+.skill-item, .portfolio-item {
+    /* ... properti sebelumnya ... */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; /* Transisi untuk hover */
+}
+.skill-item:hover, .portfolio-item:hover {
+    transform: translateY(-12px); /* Melayang sedikit lebih tinggi */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Bayangan lebih jelas */
+}
+/* --- Untuk pemisah section gelombang (Contoh) --- */
+.section-wave {
+    position: relative;
+    padding-bottom: 50px; /* Jarak agar gelombang terlihat */
+    background-color: #fff; /* Warna background section di atas gelombang */
+}
+
+.section-wave::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Tinggi gelombang */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23e2e2e2' fill-opacity='1' d='M0,224L48,213.3C96,203,192,181,288,170.7C384,160,480,160,576,144C672,128,768,96,864,101.3C960,107,1056,149,1152,176C1248,203,1344,213,1392,218.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: 1; /* Pastikan di atas konten section berikutnya */
+}
+
+/* Contoh penggunaan di HTML: */
+/* <section id="about" class="about-me section-wave"> ... </section> */
