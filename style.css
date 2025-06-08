@@ -123,35 +123,43 @@ nav ul li a:hover {
     }
 
     /* Sembunyikan menu pada ukuran mobile secara default */
-    nav ul {
-        display: none;
+ nav ul {
+        /* Hapus display: none; */ /* Jangan sembunyikan dengan display: none */
+        overflow: hidden; /* Penting untuk menyembunyikan konten yang meluap */
+        max-height: 0;   /* Awalnya, tinggi maksimum adalah 0 (sembunyi) */
+        opacity: 0;      /* Awalnya tidak terlihat */
+        pointer-events: none; /* Mencegah klik saat tidak terlihat */
+
+        /* Transisi untuk max-height dan opacity */
+        transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+
+        /* Propertti lainnya tetap sama */
         flex-direction: column;
         width: 100%;
         text-align: center;
-        background: black; /* Latar belakang menu saat dibuka */
+        background: black;
         position: absolute;
-        top: 100%; /* Di bawah header */
+        top: 100%;
         left: 0;
-        padding: 20px 0;
+        padding: 0; /* Padding diatur di nav ul.nav-open agar ikut bertransisi */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease-in-out;
         z-index: 999;
     }
 
-    /* Tampilkan menu saat kelas 'nav-open' ditambahkan oleh JavaScript */
     nav ul.nav-open {
-        display: flex;
+        max-height: 500px; /* Atau nilai yang cukup besar agar semua item terlihat */
+        opacity: 1;
+        pointer-events: auto; /* Memungkinkan klik saat terlihat */
+        padding: 20px 0; /* Tambahkan padding di sini agar ikut bertransisi */
     }
 
-    nav ul li {
-        margin: 10px 0; /* Jarak vertikal antar item menu */
-    }
-
+    /* Pastikan li a memiliki padding agar area kliknya cukup */
     nav ul li a {
         padding: 10px 0;
-        display: block; /* Agar link memenuhi lebar li */
-        color: #ffffff; /* Pastikan warna teks terlihat */
+        display: block;
+        color: #ffffff;
     }
+
 
     .menu-toggle {
         display: flex; /* Tampilkan tombol hamburger */
