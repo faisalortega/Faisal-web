@@ -84,6 +84,29 @@ document.addEventListener('DOMContentLoaded', function() {
     revealElements.forEach(el => {
         observer.observe(el); // Mulai mengamati setiap elemen dengan class 'reveal'
     });
+
+     // --- Fungsionalitas Tombol Hamburger ---
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navUl = document.querySelector('nav ul'); // Pilih elemen ul navigasi Anda
+
+    if (menuToggle && navUl) { // Pastikan kedua elemen ada
+        menuToggle.addEventListener('click', function() {
+            // Toggle class 'open' pada tombol hamburger untuk animasinya
+            menuToggle.classList.toggle('open');
+            // Toggle class 'nav-open' pada ul navigasi untuk menampilkan/menyembunyikan menu
+            navUl.classList.toggle('nav-open');
+        });
+
+        // Opsional: Tutup menu saat link navigasi diklik (berguna untuk mobile)
+        navUl.querySelectorAll('li a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (navUl.classList.contains('nav-open')) {
+                    navUl.classList.remove('nav-open');
+                    menuToggle.classList.remove('open');
+                }
+            });
+        });
+    }
 }); // Akhir dari DOMContentLoaded
 
 // --- Header Scroll Effect (change background on scroll) ---
@@ -97,3 +120,4 @@ window.addEventListener('scroll', () => {
         header.classList.remove('scrolled');
     }
 });
+
