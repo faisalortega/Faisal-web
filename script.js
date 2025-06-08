@@ -1,5 +1,6 @@
 // Pastikan DOMContentLoaded listener hanya ada satu di awal script.js
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded!'); // Cek apakah script jalan
     // Mengisi tahun saat ini secara otomatis di footer
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
