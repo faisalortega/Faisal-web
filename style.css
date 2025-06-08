@@ -170,6 +170,11 @@ nav ul li a:hover {
         font-size: 2rem;
         margin-bottom: 30px;
     }
+    nav ul.nav-open {
+        display: flex; /* Atau block, tergantung tata letak yang diinginkan */
+        /* ... properti lain untuk styling menu terbuka ... */
+    }
+}
 
     /* Hero section adjustments */
     .hero {
@@ -223,7 +228,7 @@ nav ul li a:hover {
     .contact p {
         font-size: 1rem;
     }
-}
+
 
 /* Gaya untuk layar yang lebih kecil dari 480px (smartphone) */
 @media (max-width: 480px) {
@@ -508,17 +513,36 @@ footer {
 }
 
 /* --- CSS untuk Animasi Scroll Reveal --- */
+/* Pastikan elemen .reveal awalnya tidak terlihat atau dalam posisi awal animasi */
 .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0; /* Awalnya tidak terlihat */
+    transform: translateY(30px); /* Contoh: muncul dari bawah ke atas */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Durasi dan jenis transisi */
+    /* Opsional: tambahkan transition untuk properti lain jika ada */
 }
 
+/* Saat kelas 'is-visible' ditambahkan, elemen akan tampil dengan animasi */
 .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Menjadi terlihat */
+    transform: translateY(0); /* Kembali ke posisi aslinya */
 }
 
+/* Tambahan: Variasi animasi jika Anda ingin */
+/* Misalnya, muncul dari kiri */
+.reveal.from-left {
+    transform: translateX(-30px);
+}
+.reveal.from-left.is-visible {
+    transform: translateX(0);
+}
+
+/* Atau, memudar saja */
+.reveal.fade-in {
+    transform: none; /* Reset transform jika pakai ini saja */
+}
+.reveal.fade-in.is-visible {
+    opacity: 1;
+}
 /* Tambahkan delay untuk item-item grid secara berurutan */
 .skills-grid .skill-item.reveal {
     transition-delay: 0.1s;
