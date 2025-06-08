@@ -1,12 +1,13 @@
 // Pastikan DOMContentLoaded listener hanya ada satu di awal script.js
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded!'); // Cek apakah script jalan
     // Mengisi tahun saat ini secara otomatis di footer
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
     // --- Efek Ketik (Typing Effect) ---
     const typingTextElement = document.getElementById('typing-text');
     if (typingTextElement) { // Pastikan elemen ada sebelum menjalankan typing effect
-        const texts = ["Pengembang Web", "Desainer Grafis", "Content Creator", "Freelancer"];
+        const texts = ["Undergraduate Information Technology","Network Engineer","IT Consultant","IT Support","Cyber Security Enthusiast"];
         let textIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
