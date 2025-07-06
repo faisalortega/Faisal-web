@@ -3,94 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Faisal Hakim</title>
+    <title>Faisal Ortega Hakim</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Using modern and clean Poppins font for a similar look to the reference -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
         <nav>
-    <div class="logo">Ortegaze</div>
-    <div class="menu-toggle">
-        <span></span>
-        <span></span>
-    </div>
-    <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About Me</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+            <div class="logo">Ortegaze</div>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <div class="nav-indicator"></div> <!-- Added this element for the sliding indicator -->
+            </ul>
+        </nav>
     </header>
 
     <main>
         <section id="home" class="hero">
-            <div class="hero-content reveal">
+            <div class="hero-content reveal fade-in-up">
                 <h1>Hi, I'm Faisal Ortega Hakim</h1>
-                <p>A <span id="typing-text"></span></p>
-                <a href="#contact" class="btn">Punch This!</a>
+                <p><span id="typing-text"></span></p>
+                <a href="#contact" class="btn primary-btn">Punch This!</a>
             </div>
         </section>
 
         <section id="about" class="about-me">
-            <h2>About Me</h2>
+            <h2 class="reveal fade-in-up">About Me</h2>
             <div class="about-content">
-                <img src="pict/fotoku2.jpg" alt="Your Profile Photo">
-                <p>Hello everyone, my name is <b>Faisal Hakim</b>, also known as <b>Faisal Ortega</b>.I am a proud alumnus of <b>Multistudi High School</b>, and currently pursuing a <b>Bachelor's degree in Information Technology at the International University of Batam</b>.</p>
-                <p>I have professional experience as an engineer at <b>PT Satnusa Persada Tbk</b>, where I gained valuable insight into the tech industry. My passion lies in the field of Information Technology, particularly in <b>networking and programming.</b></p>
-                <p>With a strong enthusiasm for technology and a relentless drive to grow, I am confident in my potential to build a meaningful career in the IT world. I am always eager to learn, adapt, and contribute to innovative technological solutions.</p>
+                <div class="about-card-container reveal scale-in"> <!-- New container for flip card -->
+                    <div class="about-card-inner">
+                        <div class="flip-card-front">
+                            <img src="pict/fotoku2.jpg" alt="Your Profile Photo">
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Faisal Ortega Hakim</h3>
+                            <p><b>Date of Birth:</b> Batam, 19 September 2004</p>
+                            <p>Student at <b>Universitas Internasional Batam</b></p>
+                        </ul>
+
+                            <p><b>Hobby:</b> Work</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-text reveal fade-in-up">
+                    <p>Hello everyone, my name is <b>Faisal Hakim</b>, also known as <b>Faisal Ortega</b>. I am a proud alumnus of <b>Multistudi High School</b>, and currently pursuing a <b>Bachelor's degree in Information Technology at the International University of Batam</b>.</p>
+                    <p>I have professional experience as an engineer at <b>PT Satnusa Persada Tbk</b>, where I gained valuable insight into the tech industry. My passion lies in the field of Information Technology, particularly in <b>networking and programming</b>.</p>
+                    <p>With a strong enthusiasm for technology and a relentless drive to grow, I am confident in my potential to build a meaningful career in the IT world. I am always eager to learn, adapt, and contribute to innovative technological solutions.</p>
+                </div>
             </div>
         </section>
 
         <section id="skills" class="skills">
-            <h2>My Skills</h2>
+            <h2 class="reveal fade-in-up">My Skills</h2>
             <div class="skills-grid">
-                <div class="skill-item">
+                <div class="skill-item reveal fade-in-up">
                     <h3>Network Engineer</h3>
-                    <p>As an Network Engineering iam a specialist to designs, maintains reliable and secure computer networks for smooth data communication.</p>
+                    <p>As a Network Engineer, I specialize in designing and maintaining reliable and secure computer networks for smooth data communication.</p>
                 </div>
-                <div class="skill-item">
+                <div class="skill-item reveal fade-in-up delay-1">
                     <h3>IT Consultant</h3>
                     <p>As an IT Consultant, I provide expert recommendations to help clients choose the best solutions tailored to their needs and goals.</p>
                 </div>
-                <div class="skill-item">
+                <div class="skill-item reveal fade-in-up delay-2">
                     <h3>Cyber Security Enthusiast</h3>
                     <p>As a Cybersecurity enthusiast, I actively explore operating systems like Linux, especially Kali Linux, and its powerful tools such as OSINT for ethical hacking and information gathering.</p>
                 </div>
-                </div>
+            </div>
         </section>
 
         <section id="portfolio" class="portfolio">
-            <h2>My Portfolio</h2>
+            <h2 class="reveal fade-in-up">My Portfolio</h2>
             <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <img src="pict/ccna1.png" alt="Project 1">
-                    <h3><b>Certified Cisco</b></h3>
-                    <p>Cisco verifies the earner of this badge successfully completed the Introduction to Networks course and achieved this student level credential. Earner has knowledge of networking including IP addressing, how physical, data link protocols support Ethernet, can configure connectivity between switches, routers and end devices to provide access to local and remote resources. Earner participated in up to 54 labs and accumulated up to 14 hours of hands-on labs using Cisco hardware or Packet Tracer tool</p>
-                    <a href="https://www.credly.com/badges/bc358cba-cfa8-40b4-9422-7361b0a7afd8/public_url" target="_blank" class="btn-small">View Project</a>
+                <!-- Portfolio Item 1 -->
+                <div class="portfolio-item reveal fade-in-up">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="pict/ccna1.png" alt="Cisco Certification 1">
+                        </div>
+                        <div class="flip-card-back">
+                            <h3><b>Certified Cisco (Introduction to Networks)</b></h3>
+                            <p>Cisco verifies the earner of this badge successfully completed the Introduction to Networks course and achieved this student level credential. Earner has knowledge of networking including IP addressing, how physical, data link protocols support Ethernet, can configure connectivity between switches, routers and end devices to provide access to local and remote resources. Earner participated in up to 54 labs and accumulated up to 14 hours of hands-on labs using Cisco hardware or Packet Tracer tool.</p>
+                            <a href="https://www.credly.com/badges/bc358cba-cfa8-40b4-9422-7361b0a7afd8/public_url" target="_blank" class="btn secondary-btn">View Project</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="pict/ccna2.png" alt="Project 2">
-                    <h3><b>Certified Cisco</b></h3>
-                    <p>Cisco verifies the earner of this badge successfully completed the Switching, Routing, and Wireless Essentials course and achieved this student level credential. The earner has a foundation in switching operations, wired and wireless LAN configuration using security best practices, redundancy protocols, and developed problem-solving skills. Earner participated in up to 45 practice activities and accumulated up to 21 hours of hands-on labs using Cisco hardware and/or the Cisco Packet Tracer tool..</p>
-                    <a href="https://www.credly.com/badges/92cb4a96-b468-427e-9d2c-01b9250ef0d5/public_url" target="_blank" class="btn-small">View Project</a>
+
+                <!-- Portfolio Item 2 -->
+                <div class="portfolio-item reveal fade-in-up delay-1">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="pict/ccna2.png" alt="Cisco Certification 2">
+                        </div>
+                        <div class="flip-card-back">
+                            <h3><b>Certified Cisco (Switching, Routing, and Wireless Essentials)</b></h3>
+                            <p>Cisco verifies the earner of this badge successfully completed the Switching, Routing, and Wireless Essentials course and achieved this student level credential. The earner has a foundation in switching operations, wired and wireless LAN configuration using security best practices, redundancy protocols, and developed problem-solving skills. Earner participated in up to 45 practice activities and accumulated up to 21 hours of hands-on labs using Cisco hardware and/or the Cisco Packet Tracer tool.</p>
+                            <a href="https://www.credly.com/badges/92cb4a96-b468-427e-9d2c-01b9250ef0d5/public_url" target="_blank" class="btn secondary-btn">View Project</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="pict/ccna3.png" alt="Project 3">
-                    <h3><b>Certified Cisco</b></h3>
-                    <p>Cisco verifies the earner of this badge successfully completed the Enterprise Networking, Security and Automation course and achieved this student level credential. The earner has a foundation in scalable network architectures, dynamic routing, mitigation of security threats, wide-area networks, virtualization, automation of programmable networks. Earner participated in up to 41 lab activities and accumulated up to 15 hours of hands-on labs using Cisco hardware and/or Cisco Packet Tracer tool.</p>
-                    <a href="https://www.credly.com/badges/582a2edd-dc2b-4172-8cb8-53cc9cbfad63/public_url" target="_blank" class="btn-small">View Project</a>
+
+                <!-- Portfolio Item 3 -->
+                <div class="portfolio-item reveal fade-in-up delay-2">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="pict/ccna3.png" alt="Cisco Certification 3">
+                        </div>
+                        <div class="flip-card-back">
+                            <h3><b>Certified Cisco (Enterprise Networking, Security and Automation)</b></h3>
+                            <p>Cisco verifies the earner of this badge successfully completed the Enterprise Networking, Security and Automation course and achieved this student level credential. The earner has a foundation in scalable network architectures, dynamic routing, mitigation of security threats, wide-area networks, virtualization, automation of programmable networks. Earner participated in up to 41 lab activities and accumulated up to 15 hours of hands-on labs using Cisco hardware and/or Cisco Packet Tracer tool.</p>
+                            <a href="https://www.credly.com/badges/582a2edd-dc2b-4172-8cb8-53cc9cbfad63/public_url" target="_blank" class="btn secondary-btn">View Project</a>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="portfolio-item reveal fade-in-up delay-1">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="pict/cc1.png" alt="Cyber Academy">
+                        </div>
+                        <div class="flip-card-back">
+                            <h3><b>Cyber Academy (Introduction to Information Security Course)</b></h3>
+                            <p>Has Completed the Introduction to Information Security Course and showing an understanding of its course module and requirement.</p>
+                            <a href="https://www.cyberacademy.id/certificate/PKMI01106252623" target="_blank" class="btn secondary-btn">View Project</a>
+                        </div>
+                    </div>
                 </div>
+            </div>
         </section>
 
         <section id="contact" class="contact">
-            <h2>Contact Me</h2>
-            <p><b>Question? Just hit this!</b></p>
-            <form action="https://formspree.io/f/xeokaool" method="POST">
+            <h2 class="reveal fade-in-up">Contact Me</h2>
+            <p class="reveal fade-in-up"><b>Question? Just hit this!</b></p>
+            <form action="https://formspree.io/f/xeokaool" method="POST" class="reveal fade-in-up">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
@@ -103,27 +160,26 @@
                     <label for="message">Message:</label>
                     <textarea id="message" name="message" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn">Send Message</button>
+                <button type="submit" class="btn primary-btn">Send Message</button>
             </form>
-            <div class="social-links">
+            <div class="social-links reveal fade-in-up">
                 <p>Find me on:</p>
-                <a href="https://www.linkedin.com/in/faisal-hakim-61896129b/" target="_blank">LinkedIn</a>
-                <a href="https://www.credly.com/users/faisalortega" target="_blank">Credly</a>
-                <a href="https://github.com/faisalortega" target="_blank">GitHub</a>
-                <a href="https://x.com/FaisalOrtegazm" target="_blank">X</a>
-                <a href="https://www.instagram.com/faisalortega" target="_blank">Instagram</a>
-                </div>
+                <a href="https://www.linkedin.com/in/faisal-hakim-61896129b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.credly.com/users/faisalortega" target="_blank"><i class="fas fa-certificate"></i></a>
+                <a href="https://github.com/faisalortega" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://x.com/FaisalOrtegazm" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/faisalortega" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; <span id="currentYear"></span> Faisal Ortega Hakim. All Rights Reserved.</p>
+        <div class="footer-branding-text">ORTEGAWS</div>
+        <div class="made-by-text">
+            <span>Made by Faisal Ortega</span>
+        </div>
     </footer>
 
-    <script>
-        // Automatically fills the current year in the footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-    </script>
     <script src="script.js"></script>
 </body>
 </html>
