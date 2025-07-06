@@ -1,17 +1,38 @@
 /* style.css */
 
-/* Reset CSS Dasar */
+/* Basic CSS Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* CSS Variables for Colors and Fonts */
+:root {
+    --dark-background: #1a1a1a; /* Main dark background */
+    --card-background: #282828; /* Slightly lighter background for cards/elements */
+    --light-text: #e0e0e0; /* Light text color for contrast */
+    --subtle-text: #a0a0a0; /* Secondary/more muted text color */
+    --accent-color: #8a2be2; /* Main accent color (bluish-purple) */
+    --secondary-accent: #ff69b4; /* Secondary accent color (pink) */
+    --border-color: #333; /* Subtle border color */
+    --hover-shadow: rgba(138, 43, 226, 0.3); /* Hover shadow from accent color */
+    --transition-speed: 0.4s; /* General transition speed */
+}
+
+html {
+    height: 100%; /* Ensure html takes full height */
+}
+
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #000000;
-    color: #2c03b1; /* Pastikan warna teks ini terlihat di latar belakang hitam */
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.7;
+    background-color: var(--dark-background);
+    color: var(--light-text);
+    scroll-behavior: smooth; /* For smooth scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    min-height: 100%; /* Ensure body takes at least full height */
+    padding-top: 80px; /* Added padding-top to create space for the fixed header */
 }
 
 .container {
@@ -22,15 +43,18 @@ body {
 
 /* --- Header & Navigation --- */
 header {
-    background: black;
-    color: #ffffff;
-    padding: 1.5rem 0;
+    background: rgba(26, 26, 26, 1); /* Set to fully opaque */
+    padding: 0.8rem 0; /* Consistent padding */
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
-    z-index: 1000;
-    transition: background 0.4s ease-out, padding 0.4s ease-out, box-shadow 0.4s ease-out;
+    z-index: 9999; /* Increased z-index to ensure it stays on top */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8); /* Stronger and more spread shadow */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border for separation */
+    will-change: transform, background, padding, box-shadow; /* Added transform to will-change */
+    transform: translate3d(0,0,0); /* Explicitly force GPU acceleration for fixed header */
+    transition: none; /* Remove transition as it's always solid now */
 }
 
 nav {
@@ -43,268 +67,176 @@ nav {
 }
 
 nav .logo {
-    /* font-family: var(--font-heading); <--- Pastikan Anda mendefinisikan --font-heading di root atau body */
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--light-text);
     letter-spacing: 1px;
-    /* margin-right: auto; <--- Ini tidak diperlukan jika menggunakan justify-content: space-between; */
+    text-transform: uppercase;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 30px; /* Memberikan jarak antar item menu */
-    /* Untuk mode mobile, kita akan ubah ini nanti */
+    gap: 35px;
+    position: relative; /* Needed for absolute positioning of nav-indicator */
+    padding: 10px 0; /* Add padding to make space for the indicator */
+    background-color: var(--card-background); /* Background for the nav items container */
+    border-radius: 50px; /* Rounded pill shape */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); /* Slightly stronger shadow for the pill */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle light border for the pill */
+    will-change: transform; /* Add will-change for the pill itself if it moves/transforms */
 }
 
 nav ul li a {
-    color: #ffffff;
-    font-weight: 600;
-    padding: 5px 0;
+    color: var(--light-text);
+    font-weight: 500;
+    padding: 8px 20px; /* Adjusted padding for better button-like appearance */
     position: relative;
-    text-decoration: none; /* Tambahkan ini agar link tidak bergaris bawah */
-    transition: color 0.3s ease; /* Transisi untuk hover link */
+    text-decoration: none;
+    transition: color 0.3s ease;
+    z-index: 2; /* Ensure links are above the indicator */
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: transparent; /* Make it transparent */
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease-out;
 }
 
 nav ul li a:hover {
-    color: #a0a0a0; /* Contoh warna hover */
+    color: var(--accent-color);
+}
+
+nav ul li a:hover::after {
+    width: 0; /* No underline on hover */
+}
+
+/* --- Navigation Indicator (the sliding frame) --- */
+.nav-indicator {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    background: linear-gradient(45deg, var(--accent-color), var(--secondary-accent));
+    border-radius: 50px; /* Match parent ul's rounded corners */
+    transition: left 0.3s ease-out, width 0.3s ease-out; /* Smooth transition for movement and size */
+    z-index: 1; /* Ensure it's behind the links */
+    box-shadow: 0 2px 10px var(--hover-shadow); /* Subtle shadow */
+    height: calc(100% - 10px); /* Slightly smaller than parent padding */
+    will-change: left, width, transform; /* Optimize for animation */
 }
 
 
-/* --- Tombol hamburger untuk mobile (baru) --- */
+/* --- Hamburger button for mobile --- */
 .menu-toggle {
-    display: none; /* Sembunyikan secara default untuk desktop */
+    display: none; /* Hidden by default for desktop */
     flex-direction: column;
     justify-content: space-around;
     width: 30px;
-    height: 20px;
+    height: 22px;
     cursor: pointer;
-    z-index: 1001; /* Pastikan di atas menu */
+    z-index: 1001;
+    transition: all 0.3s ease-in-out;
 }
 
 .menu-toggle span {
     display: block;
     width: 100%;
     height: 3px;
-    background-color: #ffffff;
+    background-color: var(--light-text);
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
 }
 
-/* Animasi hamburger saat aktif (gunakan JavaScript untuk menambahkan kelas 'open') */
+/* Animation for opening the menu */
 .menu-toggle.open span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: rotate(45deg) translate(7px, 7px);
 }
 .menu-toggle.open span:nth-child(2) {
     opacity: 0;
 }
 .menu-toggle.open span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    transform: rotate(-45deg) translate(7px, -7px);
 }
 
-
-/* ... Kode CSS lainnya ... */
-
-
-/* --- Responsive Design (Media Queries) --- */
-
-/* Untuk tablet dan mobile (layar di bawah 768px) */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column; /* Mengubah tata letak menjadi kolom */
-        align-items: center; /* Memusatkan item secara horizontal */
-        padding: 0 15px; /* Sesuaikan padding */
-    }
-
-    nav .logo {
-        margin-bottom: 20px; /* Memberi jarak antara logo dan menu */
-        font-size: 1.8rem; /* Sedikit perkecil ukuran font logo */
-    }
-
-    /* Sembunyikan menu pada ukuran mobile secara default */
- nav ul {
-        /* Hapus display: none; */ /* Jangan sembunyikan dengan display: none */
-        overflow: hidden; /* Penting untuk menyembunyikan konten yang meluap */
-        max-height: 0;   /* Awalnya, tinggi maksimum adalah 0 (sembunyi) */
-        opacity: 0;      /* Awalnya tidak terlihat */
-        pointer-events: none; /* Mencegah klik saat tidak terlihat */
-
-        /* Transisi untuk max-height dan opacity */
-        transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
-
-        /* Propertti lainnya tetap sama */
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        background: black;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        padding: 0; /* Padding diatur di nav ul.nav-open agar ikut bertransisi */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 999;
-    }
-
-    nav ul.nav-open {
-        max-height: 500px; /* Atau nilai yang cukup besar agar semua item terlihat */
-        opacity: 1;
-        pointer-events: auto; /* Memungkinkan klik saat terlihat */
-        padding: 20px 0; /* Tambahkan padding di sini agar ikut bertransisi */
-    }
-
-    /* Pastikan li a memiliki padding agar area kliknya cukup */
-    nav ul li a {
-        padding: 10px 0;
-        display: block;
-        color: #ffffff;
-    }
-
-
-    .menu-toggle {
-        display: flex; /* Tampilkan tombol hamburger */
-        position: absolute; /* Posisikan secara absolut di dalam header */
-        right: 25px; /* Jarak dari kanan */
-        top: 50%; /* Tengah secara vertikal */
-        transform: translateY(-50%); /* Penyesuaian untuk tengah absolut */
-    }
-
-    /* Adjust section padding for mobile */
-    section {
-        padding: 60px 0;
-    }
-
-    h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-    nav ul.nav-open {
-        display: flex; /* Atau block, tergantung tata letak yang diinginkan */
-        /* ... properti lain untuk styling menu terbuka ... */
-    }
-}
-
-    /* Hero section adjustments */
-    .hero {
-        min-height: 70vh;
-        padding: 1rem;
-    }
-
-    .hero-content h1 { /* Asumsi ada elemen h1 di dalam .hero-content */
-        font-size: 2.5rem;
-    }
-
-    .hero-content p { /* Asumsi ada elemen p di dalam .hero-content */
-        font-size: 1rem;
-    }
-
-    /* About Me Section */
-    .about-me .about-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-
-    .about-me img {
-        margin-bottom: 20px;
-    }
-
-    .about-me .about-content > div {
-        text-align: center;
-        min-width: unset; /* Hapus min-width agar lebih fleksibel */
-    }
-
-    .about-me p {
-        font-size: 1rem;
-    }
-
-    /* Skills and Portfolio Grid */
-    .skills-grid, .portfolio-grid {
-        grid-template-columns: 1fr; /* Satu kolom untuk mobile */
-        gap: 20px;
-    }
-
-    .skill-item, .portfolio-item {
-        padding: 20px;
-    }
-
-    /* Contact Section */
-    .contact form {
-        padding: 20px;
-    }
-
-    .contact p {
-        font-size: 1rem;
-    }
-
-
-/* Gaya untuk layar yang lebih kecil dari 480px (smartphone) */
-@media (max-width: 480px) {
-    nav .logo {
-        font-size: 1.5rem;
-    }
-
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .hero-content p {
-        font-size: 0.9rem;
-    }
-
-    .btn {
-        padding: 8px 15px;
-        font-size: 0.9rem;
-    }
-
-    /* Menyesuaikan padding untuk section agar tidak terlalu sempit */
-    section {
-        padding: 40px 0;
-    }
-}
-
-
-/* Tombol Umum */
+/* --- General Buttons --- */
 .btn {
     display: inline-block;
-    background: #000000;
-    color: #fff;
-    padding: 10px 20px;
+    padding: 12px 28px;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    will-change: transform, box-shadow, opacity; /* Added for performance optimization */
+    transform: translateZ(0); /* Added for hardware acceleration */
 }
 
-.btn:hover {
-    background: #290469;
+.primary-btn {
+    background: linear-gradient(45deg, var(--accent-color), var(--secondary-accent));
+    color: #ffffff; /* Text color is white */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Added text shadow for clarity */
 }
 
-.btn-small {
-    font-size: 0.9rem;
-    padding: 5px 10px;
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px var(--hover-shadow);
+    opacity: 0.9;
 }
 
-/* Bagian Umum */
+.secondary-btn {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+}
+
+.secondary-btn:hover {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--hover-shadow);
+}
+
+/* --- General Sections --- */
 section {
-    padding: 80px 0;
+    padding: 100px 0;
     text-align: center;
-}
-
-section:nth-child(even) {
-    background-color: #000000;
+    position: relative; /* For reveal animations */
 }
 
 h2 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: #ffffff;
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    color: var(--light-text);
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(45deg, var(--accent-color), var(--secondary-accent));
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
 }
 
 /* --- Hero Section --- */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.303), rgba(0, 0, 0, 0.303)), url('pict/fotoku.jpg') no-repeat center center/cover;
-    color: #fff;
-    min-height: 90vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('pict/fotoku.jpg') no-repeat center center/cover;
+    background-attachment: fixed; /* Added for smooth parallax effect */
+    min-height: 100vh; /* Fill entire viewport height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -312,287 +244,758 @@ h2 {
     padding: 2rem;
     position: relative;
     overflow: hidden;
+    transform: translateZ(0); /* Added for hardware acceleration */
 }
 
-/* Efek Overlay Gradien Animasi */
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, rgba(0,123,255,0.2), rgba(40,167,69,0.2));
-    mix-blend-mode: multiply;
-    animation: gradientShift 15s ease infinite alternate;
-    pointer-events: none;
+.hero-content {
+    max-width: 800px;
+    z-index: 2;
 }
 
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
+.hero-content h1 {
+    font-size: 2.5rem; /* Reverted to previous size */
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1rem; /* Reverted to previous size */
+    color: var(--subtle-text);
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+#typing-text {
+    font-weight: 500;
+    color: var(--accent-color);
 }
 
 /* --- About Me Section --- */
+.about-me {
+    background-color: var(--dark-background); /* Ensure consistency with body background */
+    padding-top: 120px; /* A bit more top padding */
+}
+
 .about-me .about-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 40px;
-    max-width: 900px;
+    gap: 60px; /* Spacing between elements */
+    max-width: 1000px;
     margin: auto;
     text-align: left;
 }
 
-.about-me img {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
+/* About Card Container - for the flip effect */
+.about-card-container {
+    width: 300px; /* Fixed width for the card */
+    height: 300px; /* Fixed height for the card */
+    perspective: 1000px; /* Establishes the 3D perspective */
+    border-radius: 15px; /* Match image border-radius */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Initial shadow */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smooth transition for hover */
+    will-change: transform, box-shadow; /* Optimize for animation */
+    transform: translateZ(0); /* Force GPU acceleration */
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+.about-card-container:hover {
+    transform: translateY(-15px) scale(1.05); /* Lift and subtle zoom on hover */
+    box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3); /* Stronger shadow for profile photo */
+    z-index: 10; /* Bring to front */
+}
+
+/* Inner container for the flip effect */
+.about-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1); /* Smooth flip transition */
+    transform-style: preserve-3d; /* Preserve 3D space for children */
+    border-radius: 15px; /* Match parent */
+}
+
+/* When the about card is 'flipped' */
+.about-card-container.flipped .about-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Front and back faces of the card */
+.about-card-front, .about-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Hide the back of the element when facing away */
+    backface-visibility: hidden;
+    border-radius: 15px; /* Match parent */
+    overflow: hidden; /* Hide overflowing content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    background-color: var(--card-background); /* Default background */
+    border: 5px solid var(--accent-color); /* Border from original image */
+}
+
+.about-card-front img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: 7px solid var(--primary-color); /* Pastikan --primary-color didefinisikan */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
+    border-radius: 0; /* No border-radius here, applied to parent */
 }
 
-.about-me img:hover {
-    transform: scale(1.05);
+.about-card-back {
+    background-color: var(--card-background); /* Consistent background */
+    transform: rotateY(180deg); /* Initially hidden */
+    padding: 20px; /* Padding for text content */
+    justify-content: flex-start; /* Align text to top */
+    align-items: flex-start; /* Align text to left */
+    text-align: left; /* Align text to left */
+    color: var(--light-text); /* Text color */
+    overflow-y: auto; /* Enable scrolling for bio data */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
-.about-me .about-content > div {
+.about-card-back h3 {
+    color: var(--light-text);
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.about-card-back p, .about-card-back ul {
+    font-size: 0.95rem;
+    color: var(--subtle-text);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.about-card-back ul {
+    list-style-position: inside; /* Bullet points inside list item */
+    padding-left: 10px; /* Indent list items */
+}
+
+
+.about-me .about-text {
     flex: 1;
     min-width: 300px;
     max-width: 600px;
 }
 
 .about-me p {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     line-height: 1.8;
     margin-bottom: 20px;
+    color: var(--subtle-text);
 }
 
-.about-me h3 {
-    /* font-family: var(--font-heading); <--- Pastikan ini juga didefinisikan */
-    font-size: 1.8rem;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    color: var(--text-color); /* Pastikan --text-color didefinisikan */
+.about-me p b {
+    color: var(--light-text);
 }
-
 
 /* Skills Section */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    max-width: 900px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
     margin: auto;
 }
 
 .skill-item {
-    background: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    background: var(--card-background);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                box-shadow 0.4s ease, 
+                background 0.4s ease, 
+                color 0.4s ease; 
+    border: 1px solid var(--border-color);
+    will-change: transform, box-shadow, background, color; 
 }
 
 .skill-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-15px) scale(1.05); /* Adjusted for "floating" effect like profile */
+    box-shadow: 0 20px 40px var(--hover-shadow); /* Stronger shadow on hover */
+    background: var(--accent-color); /* Change background on hover */
+    color: #ffffff; /* Ensure text is visible on new background */
+    z-index: 10; /* Added z-index to ensure it pops on top during hover */
 }
 
 .skill-item h3 {
-    margin-bottom: 10px;
-    color: #000000;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    transition: color 0.4s ease; 
+}
+
+.skill-item:hover h3 {
+    color: #ffffff; /* Change heading color on hover */
+}
+
+.skill-item p {
+    color: var(--subtle-text);
+    font-size: 1rem;
+    line-height: 1.6;
+    transition: color 0.4s ease; 
+}
+
+.skill-item:hover p {
+    color: #ffffff; /* Change paragraph color on hover */
 }
 
 /* Portfolio Section */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 1100px;
     margin: auto;
 }
 
+/* Base for the flip card effect */
 .portfolio-item {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.662);
+    background: transparent; /* Background will be on the inner cards */
+    padding: 0; /* Remove padding from outer container */
+    border-radius: 12px;
+    box-shadow: none; /* Remove shadow from outer container */
     text-align: left;
-    transition: transform 0.3s ease;
+    perspective: 1000px; /* Establishes the 3D perspective for the child */
+    height: 350px; /* Adjusted height for landscape photos */
+    will-change: transform; /* Optimize for flip animation */
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                box-shadow 0.4s ease; 
 }
 
-.portfolio-item:hover {
-    transform: translateY(-5px);
-}
-
-.portfolio-item img {
+/* Container for the front and back faces */
+.flip-card-inner {
+    position: relative;
     width: 100%;
-    height: 200px;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1); /* Smooth flip transition */
+    transform-style: preserve-3d; /* Preserve 3D space for children */
+    border-radius: 12px; /* Apply border-radius here */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Apply shadow here */
+    border: 1px solid var(--border-color); /* Apply border here */
+    will-change: transform, box-shadow; /* Optimize for animation */
+    transform: translate3d(0,0,0); /* Force GPU acceleration for the inner flip card */
+}
+
+/* When the portfolio item is 'flipped' */
+.portfolio-item.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Hover effect for portfolio items */
+.portfolio-item:hover {
+    transform: translateY(-15px) scale(1.05); /* Adjusted for "floating" effect like profile */
+    box-shadow: 0 20px 40px var(--hover-shadow); /* Stronger shadow on hover */
+    z-index: 10; /* Bring to front on hover */
+}
+
+/* Common styles for front and back faces */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Hide the back of the element when facing away */
+    backface-visibility: hidden;
+    border-radius: 12px; /* Match parent */
+    overflow: hidden; /* Hide overflowing content by default */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    padding: 20px; /* Adjusted padding for faces */
+    background: var(--card-background); /* Default background for both faces */
+}
+
+/* Front Face */
+.flip-card-front {
+    background-color: var(--card-background); /* Ensure consistent background */
+}
+
+.flip-card-front img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 15px;
+    border-radius: 0; /* No border-radius here, applied to parent */
+    margin-bottom: 0; /* Remove margin-bottom */
 }
 
-.portfolio-item h3 {
+/* Back Face */
+.flip-card-back {
+    background-color: var(--card-background); /* Consistent background */
+    transform: rotateY(180deg); /* Initially hidden */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Allow content to start from top */
+    align-items: flex-start; /* Align text to left */
+    text-align: left; /* Align text to left */
+    color: var(--light-text); /* Text color for back face */
+    overflow-y: auto; /* Added for vertical scrolling */
+    -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+}
+
+.flip-card-back h3 {
     margin-bottom: 10px;
-    color: #000000;
+    color: var(--light-text);
+    font-size: 1.5rem;
+    font-weight: 600;
+    width: 100%; /* Take full width */
 }
 
-.portfolio-item p {
+.flip-card-back p {
     font-size: 0.95rem;
-    margin-bottom: 15px;
+    color: var(--subtle-text);
+    margin-bottom: 20px;
+    width: 100%; /* Take full width */
 }
+
+.flip-card-back .btn {
+    align-self: center; /* Center the button on the back face */
+    margin-top: auto; /* Push button to the bottom, works with flex-start on parent */
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
 
 /* Contact Section */
+.contact {
+    background-color: var(--dark-background);
+}
+
 .contact p {
-    margin-bottom: 30px;
-    font-size: 1.1rem;
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+    color: var(--subtle-text);
 }
 
 .contact form {
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
-    background: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    background: var(--card-background);
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     text-align: left;
+    border: 1px solid var(--border-color);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: var(--light-text);
+    font-size: 1.1rem;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     font-size: 1rem;
+    background-color: #3a3a3a; /* Slightly lighter input background */
+    color: var(--light-text);
+    outline: none; /* Remove default outline */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3);
 }
 
 .form-group textarea {
     resize: vertical;
+    min-height: 120px;
 }
 
-.contact .btn {
+.contact .primary-btn {
     width: auto;
     display: block;
-    margin-top: 20px;
-    text-align: center;
+    margin: 30px auto 0; /* Center the button */
 }
 
 .social-links {
-    margin-top: 40px;
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
 }
 
-.social-links a {
-    display: inline-block;
-    margin: 0 10px;
-    color: #0011ff;
-    text-decoration: none;
+.social-links p {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
     font-size: 1.1rem;
-    transition: color 0.3s ease;
+    color: var(--subtle-text);
+}
+
+/* Social Media Icons */
+.social-links a {
+    display: inline-flex; /* Use inline-flex to center icon and text if any */
+    align-items: center; /* Center icon vertically */
+    justify-content: center; /* Center icon horizontally */
+    width: 45px; /* Fixed width for circular background */
+    height: 45px; /* Fixed height for circular background */
+    margin: 0 10px;
+    color: var(--accent-color); /* Icon color */
+    text-decoration: none;
+    font-size: 1.5rem; /* Icon size */
+    border-radius: 50%; /* Make it circular */
+    border: 1px solid var(--accent-color); /* Border around the icon */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    will-change: transform, background-color, color, box-shadow; /* Optimize for animation */
+    transform: translateZ(0); /* Force GPU acceleration */
 }
 
 .social-links a:hover {
-    color: #0011ff;
-    text-decoration: underline;
+    background-color: var(--accent-color); /* Fill background on hover */
+    color: #ffffff; /* White icon on hover */
+    transform: translateY(-5px) scale(1.1); /* Lift and zoom effect */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+    border-color: var(--secondary-accent); /* Change border color on hover */
 }
 
 /* Footer */
 footer {
-    background: #000000;
-    color: #fff;
+    background: var(--dark-background); /* Match body background */
+    color: var(--subtle-text);
     text-align: center;
-    padding: 20px 0;
-    margin-top: 50px;
+    padding: 150px 0 50px; /* Increased top padding, kept bottom padding */
+    min-height: 400px; /* Increased min-height for the footer */
+    margin-top: 0px; /* Reduced margin-top to bring it closer */
+    font-size: 0.9rem;
+    display: flex; /* Use flexbox for footer content */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 15px; /* Space between footer elements */
+    position: relative; /* Needed for positioning .made-by-text */
+    overflow: hidden; /* Hide overflowing text stroke */
 }
 
-/* --- CSS untuk Animasi Scroll Reveal --- */
-/* Pastikan elemen .reveal awalnya tidak terlihat atau dalam posisi awal animasi */
+.footer-branding-text { /* Renamed from .footer-starlord-branding */
+    font-size: 20vw; /* Adjusted font size for desktop, using vw for responsiveness */
+    font-weight: 900; /* Extra bold */
+    color: #000000; /* Black color for fill */
+    text-transform: uppercase;
+    letter-spacing: -0.05em; /* Tighten letter spacing */
+    line-height: 0.8; /* Adjust line height to bring lines closer */
+    -webkit-text-stroke: 4px var(--light-text); /* Increased stroke width */
+    text-stroke: 4px var(--light-text); /* Increased stroke width */
+    -webkit-text-fill-color: transparent; /* Make text fill transparent */
+    text-fill-color: transparent; /* Make text fill transparent */
+    user-select: none; /* Prevent text selection */
+    pointer-events: none; /* Allow clicks to pass through */
+    margin-bottom: -30px; /* Adjust margin to bring closer to copyright */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.made-by-text { /* Renamed from .made-with-faisal */
+    position: fixed; /* Keep it fixed on the screen */
+    bottom: 20px; /* 20px from the bottom */
+    right: 20px; /* 20px from the right */
+    background-color: var(--card-background); /* Dark background */
+    color: var(--light-text); /* Light text */
+    padding: 10px 15px;
+    border-radius: 50px; /* Pill shape */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+    font-size: 0.9rem;
+    z-index: 10000; /* Ensure it's above everything else */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover */
+    cursor: default; /* Default cursor */
+}
+
+.made-by-text:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7); /* Stronger shadow on hover */
+}
+
+/* --- CSS for Scroll Reveal Animations --- */
 .reveal {
-    opacity: 0; /* Awalnya tidak terlihat */
-    transform: translateY(30px); /* Contoh: muncul dari bawah ke atas */
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Durasi dan jenis transisi */
-    /* Opsional: tambahkan transition untuk properti lain jika ada */
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform; /* Added for performance optimization */
+    transform: translateZ(0); /* Added for hardware acceleration */
 }
 
-/* Saat kelas 'is-visible' ditambahkan, elemen akan tampil dengan animasi */
 .reveal.is-visible {
-    opacity: 1; /* Menjadi terlihat */
-    transform: translateY(0); /* Kembali ke posisi aslinya */
-}
-
-/* Tambahan: Variasi animasi jika Anda ingin */
-/* Misalnya, muncul dari kiri */
-.reveal.from-left {
-    transform: translateX(-30px);
-}
-.reveal.from-left.is-visible {
-    transform: translateX(0);
-}
-
-/* Atau, memudar saja */
-.reveal.fade-in {
-    transform: none; /* Reset transform jika pakai ini saja */
-}
-.reveal.fade-in.is-visible {
     opacity: 1;
-}
-/* Tambahkan delay untuk item-item grid secara berurutan */
-.skills-grid .skill-item.reveal {
-    transition-delay: 0.1s;
-}
-.skills-grid .skill-item.reveal:nth-child(2) { transition-delay: 0.2s; }
-.skills-grid .skill-item.reveal:nth-child(3) { transition-delay: 0.3s; }
-.skills-grid .skill-item.reveal:nth-child(4) { transition-delay: 0.4s; }
-
-
-.portfolio-grid .portfolio-item.reveal {
-    transition-delay: 0.1s;
-}
-.portfolio-grid .portfolio-item.reveal:nth-child(2) { transition-delay: 0.2s; }
-.portfolio-grid .portfolio-item.reveal:nth-child(3) { transition-delay: 0.3s; }
-.portfolio-grid .portfolio-item.reveal:nth-child(4) { transition-delay: 0.4s; }
-
-
-/* Untuk efek hover item kartu */
-.skill-item, .portfolio-item {
-    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-}
-.skill-item:hover, .portfolio-item:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-/* --- Untuk pemisah section gelombang (Contoh) --- */
-.section-wave {
-    position: relative;
-    padding-bottom: 50px;
-    background-color: #fff;
+    transform: translateY(0) translateX(0) scale(1) rotate(0);
 }
 
-.section-wave::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23e2e2e2' fill-opacity='1' d='M0,224L48,213.3C96,203,192,181,288,170.7C384,160,480,160,576,144C672,128,768,96,864,101.3C960,107,1056,149,1152,176C1248,203,1344,213,1392,218.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    z-index: 1;
+/* Animation Variations */
+.fade-in-up {
+    transform: translateY(60px); /* Increased initial translateY for more impact */
+}
+
+.scale-in {
+    transform: scale(0.8);
+}
+
+/* Delay for sequential animations */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+/* Add more delays if needed for other elements */
+
+
+/* --- Responsive Design (Media Queries) --- */
+
+/* For tablets and mobiles (screens below 992px) */
+@media (max-width: 992px) {
+    h2 {
+        font-size: 2.8rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem; /* Adjusted for smaller screens based on new base */
+    }
+
+    .hero-content p {
+        font-size: 0.9rem; /* Adjusted for smaller screens based on new base */
+    }
+
+    .about-me .about-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .about-me img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    /* Portfolio grid adjustments for smaller screens */
+    .portfolio-grid {
+        grid-template-columns: 1fr; /* Single column for mobile */
+        gap: 30px;
+    }
+
+    .portfolio-item {
+        height: 350px; /* Adjusted height for mobile */
+    }
+
+    .flip-card-back p {
+        font-size: 0.85rem; /* Smaller text for mobile */
+    }
+
+
+    .contact form {
+        padding: 40px;
+    }
+
+    nav ul {
+        padding: 0; /* Remove padding from ul for mobile menu */
+        border-radius: 0; /* Remove border-radius for mobile menu */
+        box-shadow: none; /* Remove shadow for mobile menu */
+        border: none; /* Remove border for mobile menu */
+    }
+
+    .nav-indicator {
+        display: none; /* Hide indicator on mobile */
+    }
+
+    .footer-branding-text { /* Renamed from .footer-starlord-branding */
+        font-size: 10vw; /* Smaller font for mobile */
+        -webkit-text-stroke: 1.5px var(--light-text); /* Adjust stroke for smaller size */
+        text-stroke: 1.5px var(--light-text);
+        margin-bottom: -10px;
+    }
+
+    .made-by-text { /* Renamed from .made-with-faisal */
+        bottom: 15px;
+        right: 15px;
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+}
+
+/* For mobile (screens below 768px) */
+@media (max-width: 768px) {
+    nav {
+        flex-wrap: wrap; /* Allow wrap for logo and menu-toggle */
+        justify-content: center; /* Center logo and toggle */
+        padding: 0 20px;
+    }
+
+    nav .logo {
+        width: 100%; /* Make logo take full width */
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+
+    .menu-toggle {
+        display: flex; /* Show hamburger button */
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: -10px; /* Adjust vertical position */
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background: rgba(26, 26, 26, 0.95); /* Mobile menu background */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        max-height: 0; /* Hide by default */
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        opacity: 0;
+        pointer-events: none; /* Prevent interaction when closed */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    nav ul.nav-open {
+        max-height: 500px; /* Increased max-height to ensure all links are visible */
+        opacity: 1;
+        pointer-events: auto;
+        padding: 20px 0;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        padding: 12px 0;
+        display: block;
+        font-size: 1.1rem;
+    }
+
+    section {
+        padding: 80px 0;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+
+    .hero {
+        min-height: 80vh;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem; /* Adjusted for smaller screens based on new base */
+    }
+
+    .hero-content p {
+        font-size: 0.8rem; /* Adjusted for smaller screens based on new base */
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .about-me p {
+        font-size: 1rem;
+    }
+
+    .skill-item, .portfolio-item {
+        padding: 25px;
+    }
+
+    .skill-item h3 {
+        font-size: 1.6rem;
+    }
+
+    .portfolio-item h3 {
+        font-size: 1.3rem;
+    }
+
+    .contact form {
+        padding: 30px;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .form-group input, .form-group textarea {
+        padding: 12px;
+    }
+
+    .social-links {
+        gap: 15px;
+    }
+
+    .social-links a {
+        font-size: 1rem;
+    }
+}
+
+/* For small smartphones (screens below 480px) */
+@media (max-width: 480px) {
+    nav .logo {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem; /* Adjusted for smaller screens based on new base */
+    }
+
+    .hero-content p {
+        font-size: 0.7rem; /* Adjusted for smaller screens based on new base */
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    .about-me img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .skill-item h3 {
+        font-size: 1.4rem;
+    }
+
+    .portfolio-item h3 {
+        font-size: 1.2rem;
+    }
+
+    .contact form {
+        padding: 20px;
+    }
+
+    .footer-branding-text { /* Renamed from .footer-starlord-branding */
+        font-size: 15vw; /* Even smaller for very small screens */
+        -webkit-text-stroke: 1px var(--light-text);
+        text-stroke: 1px var(--light-text);
+    }
 }
